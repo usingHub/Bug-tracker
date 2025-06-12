@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ bug.title }}</title>
+    <style>
+        body {
+            background: #f4f4f4;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .bug-details {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .actions a {
+            display: inline-block;
+            margin-top: 10px;
+            margin-right: 10px;
+            color: white;
+            background: #007bff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .actions a.delete {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="bug-details">
+        <h2>{{ bug.title }}</h2>
+        <p><strong>Description:</strong> {{ bug.description }}</p>
+        <p><strong>Status:</strong> {{ bug.status }}</p>
+        <p><strong>Created By:</strong> {{ bug.created_by }}</p>
+        <p><strong>Assigned To:</strong> {{ bug.assigned_to }}</p>
+
+        <div class="actions">
+            <a href="{% url 'bugtracker:bug_update' bug.pk %}">Edit</a>
+            <a href="{% url 'bugtracker:bug_delete' bug.pk %}" class="delete">Delete</a>
+        </div>
+    </div>
+</body>
+</html>

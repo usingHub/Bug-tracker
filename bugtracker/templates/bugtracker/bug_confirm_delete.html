@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Bug</title>
+    <style>
+        body {
+            background: #fff3f3;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .box {
+            background: white;
+            padding: 25px;
+            max-width: 400px;
+            margin: auto;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        button {
+            background: #dc3545;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Are you sure you want to delete "{{ bug.title }}"?</h2>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Yes, Delete</button>
+        </form>
+        <a href="{% url 'bugtracker:bug_detail' bug.pk %}">Cancel</a>
+    </div>
+</body>
+</html>

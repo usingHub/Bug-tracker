@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bug List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #2c3e50;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .nav-left a,
+        .nav-right a,
+        .nav-right form button {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            padding: 8px 12px;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .nav-left a:hover,
+        .nav-right a:hover,
+        .nav-right form button:hover {
+            background-color: #34495e;
+        }
+
+        .nav-right form {
+            display: inline;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .bug-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .bug {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .bug:last-child {
+            border-bottom: none;
+        }
+
+        .bug-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .bug-description {
+            margin-top: 5px;
+            color: #555;
+        }
+
+        .create-button {
+            display: block;
+            width: fit-content;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .create-button:hover {
+            background-color: #2980b9;
+        }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-left">
+        <a href="{% url 'bugtracker:bug_list' %}" style="background-color: #34495e;">Home</a>
+    </div>
+    <div class="nav-right">
+        {% if user.is_authenticated %}
+            <span style="color: white; margin-right: 15px;">
+                Logged in as: <strong>{{ user.username }}</strong>
+            </span>
+            <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" style="
+                    background-color: #e74c3c;
+                    color: white;
+                    border: none;
+                    padding: 8px 12px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-weight: bold;
+                ">Logout</button>
+            </form>
+       
+        {% endif %}
+    </div>
+</nav>
+
+
+<h1>Your Bugs</h1>
+
+<div class="bug-container">
+    {% if bugs %}
+        {% for bug in bugs %}
+            <div class="bug">
+                <div class="bug-title">
+                    <a href="{% url 'bugtracker:bug_detail' bug.pk %}">
+                        {{ bug.title }}
+                    </a>
+                </div>
+                <div class="bug-description">{{ bug.description }}</div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p style="text-align: center;">No bugs reported yet.</p>
+    {% endif %}
+</div>
+
+<a class="create-button" href="{% url 'bugtracker:bug_create' %}">+ Report New Bug</a>
+
+</body>
+</html>
